@@ -12,6 +12,7 @@ module WaitUntil
     def eventually_true?(&block)
       @start_time = Time.now
       loop do
+        sleep 1/100.0
         return true if true?(&block)
         return false if timed_out?
       end
