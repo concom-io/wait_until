@@ -4,6 +4,7 @@ module WaitUntil
 
     def initialize(args)
       @timeout_in_seconds = args[:timeout_in_seconds] || ::WaitUntil::Wait.default_timeout_in_seconds
+      @condition_check_frq = args[:condition_check_frq]&.to_f || 100.0 
       @description        = args[:description]
       @failure_message    = args[:failure_message]
       @on_failure         = args[:on_failure]
@@ -12,7 +13,7 @@ module WaitUntil
     def eventually_true?(&block)
       @start_time = Time.now
       loop do
-        sleep 1/100.0
+        sleep 1/@condition_check_frq
         return true if true?(&block)
         return false if timed_out?
       end
