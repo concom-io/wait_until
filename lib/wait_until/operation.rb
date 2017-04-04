@@ -13,7 +13,7 @@ module WaitUntil
     def eventually_true?(&block)
       @start_time = Time.now
       loop do
-        sleep 1/@condition_check_frq
+        sleep rand(10..30)/100.0 + 1/@condition_check_frq
         return true if true?(&block)
         return false if timed_out?
       end
